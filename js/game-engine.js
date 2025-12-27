@@ -77,6 +77,12 @@ class GameEngine {
         // Draft logic
         const success = this.diceSystem.draftDie(dieId, this.state.currentPlayer);
         if (success) {
+            // Visual feedback
+            const die = this.diceSystem.pool.find(d => d.id === dieId);
+            // We need screen coords for particles... messy without renderer access in logic.
+            // MVP: Just spawn at center for draft.
+            window.renderer.particleSystem.spawn(window.renderer.center.x, window.renderer.center.y, '#fff', 'sparkle');
+
             this.nextDraftTurn();
         }
     }
@@ -102,12 +108,25 @@ class GameEngine {
         // Simple AI: Pick highest available die
         const available = this.diceSystem.getAvailableDice();
         if (available.length > 0) {
-            // Sort desc
+            // Smart Drafting: 
+            // 1. Pick 6s
+            // 2. Pick dice that allow landing on Nexus? (Too complex for DRAFT phase without knowing board state perfectly)
+            // MVP: Prioritize 6, 5, 4.
             available.sort((a, b) => b.value - a.value);
             this.diceSystem.draftDie(available[0].id, 2);
             this.nextDraftTurn();
         }
-        setTimeout(() => this.aiDraft(), 1000);
+    }
+
+    triggerAiAbility() {
+        const abilityToUse = this.factionSystem.aiEvaluateAbility(2);
+        if (abilityToUse) {
+            this.log(`AI activates ${abilityToUse}!`, 'p2');
+            this.factionSystem.activateAbility(2, abilityToUse);
+            this.updateUI();
+            // Particle
+            window.renderer.particleSystem.spawn(window.renderer.center.x, 50, '#ff2a2a', 'sparkle');
+        }
     }
 }
 

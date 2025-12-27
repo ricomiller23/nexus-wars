@@ -13,6 +13,9 @@ class BoardRenderer {
         // Click Handler
         this.canvas.addEventListener('mousedown', (e) => this.handleClick(e));
 
+        // Initialize Particle System
+        this.particleSystem = new ParticleSystem();
+
         this.resize();
     }
 
@@ -85,6 +88,11 @@ class BoardRenderer {
     draw(gameState) {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
+        this.ctx.clearRect(0, 0, this.width, this.height);
+
+        // Update Particles
+        this.particleSystem.update();
+
         // Draw Track
         this.ctx.beginPath();
         this.ctx.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2);
@@ -105,6 +113,11 @@ class BoardRenderer {
 
         // Draw Info
         // this.drawHUD(gameState);
+        // Draw Info
+        // this.drawHUD(gameState);
+
+        // Draw Particles (Overlay)
+        this.particleSystem.draw(this.ctx);
     }
 
     drawSpace(index, gameState) {

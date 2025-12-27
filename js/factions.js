@@ -151,4 +151,35 @@ class FactionSystem {
 
         return nexusCount >= target;
     }
+
+    aiEvaluateAbility(playerId) {
+        const pKey = playerId === 1 ? 'p1' : 'p2';
+        const faction = this.game.state.players[pKey].faction;
+
+        if (faction === 'storm_raiders') {
+            // Blitz: Use if it helps reach a Nexus or Base?
+            // Simple AI: 30% chance to use if moving long distance
+            if (!this.activeAbilities[pKey].blitzUsed && Math.random() < 0.3) {
+                return 'Blitz';
+            }
+        }
+
+        // Iron Phalanx (Default AI)
+        // Formation is Passive. No active ability to trigger manually?
+        // Wait, Iron Phalanx Active Ability is "Formation" (Passive rule).
+        // Let's check prompt/code.
+        // Code says: active: { name: 'Formation', desc: 'Warriors can stack...', type: 'passive_rule' }
+        // So AI doesn't need to "Activate" it. It just happens.
+
+        if (faction === 'shadow_guild') {
+            // Swap: Use if hand is bad (sum < 10?)
+            if (!this.activeAbilities[pKey].swapUsed) {
+                const myDice = this.game.diceSystem.getPlayerDice(playerId);
+                const sum = myDice.reduce((a, b) => a + b.value, 0);
+                if (sum < 8 && Math.random() < 0.5) return 'Swap';
+            }
+        }
+
+        return null;
+    }
 }
