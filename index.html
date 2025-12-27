@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS WARS</title>
+    <link rel="stylesheet" href="css/game.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="logo-area">
+                <h1>NEXUS WARS</h1>
+            </div>
+
+            <div id="game-info">
+                <div class="panel phase-panel">
+                    <h3>PHASE</h3>
+                    <div id="current-phase">SETUP</div>
+                </div>
+
+                <div class="panel turn-panel">
+                    <h3>CURRENT TURN</h3>
+                    <div id="current-player" class="player-indicator">Waiting...</div>
+                </div>
+
+                <div class="panel stats-panel">
+                    <h3>NEXUS CONTROL</h3>
+                    <div class="nexus-stats">
+                        <div class="stat-row p1-stat">
+                            <span class="player-name">Player</span>
+                            <span id="p1-nexus-count">0</span>/5
+                        </div>
+                        <div class="stat-row p2-stat">
+                            <span class="player-name">AI</span>
+                            <span id="p2-nexus-count">0</span>/5
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel buttons-panel">
+                    <button id="end-turn-btn" class="action-button">End Turn</button>
+                </div>
+
+                <div class="panel ability-panel">
+                    <h3>FACTION ABILITY</h3>
+                    <button id="ability-btn" class="action-button">Activate</button>
+                    <div id="ability-status" style="font-size:11px; margin-top:5px; color:#888;"></div>
+                </div>
+
+                <div id="log-container">
+                    <div id="game-log"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Game Area -->
+        <main id="main-area">
+            <div id="board-wrapper">
+                <canvas id="game-canvas"></canvas>
+                <div id="dice-container">
+                    <!-- Dice will be rendered here or on canvas -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/constants.js"></script>
+    <script src="js/dice-system.js"></script>
+    <script src="js/factions.js"></script>
+    <script src="js/board-renderer.js"></script>
+    <script src="js/game-engine.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
